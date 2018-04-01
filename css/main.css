@@ -2,10 +2,9 @@
 	padding:0;
 	margin:0;
 	font-size:16px;
-	background:url(../images/back.jpg) fixed center center no-repeat;
-	background-size: cover;
 	width: 100%;
 	height:100%;
+    position: relative;
 }
 
 .white-color{
@@ -19,19 +18,21 @@
 
 .title-block{
     width: 100%;
-    height: 100px;
+    height: 25%;
     text-align: center;
     display: flex;
     justify-content: center;
     flex-flow: column;
+    font-size:3em;
 }
 
 .content-block{
 	width: 100%;
-    height: 300px;
+    height: 35%;
     display: flex;
     justify-content: center;
     flex-flow: row;
+    font-size:2em;
 }
 
 .content-child{
@@ -42,13 +43,21 @@
     text-align: center;
 }
 
+.content{
+    position: absolute;
+    height:100%;
+    width:100%;
+}
+
 .button-block{
     width: 100%;
-    height: 100px;
+    height: 40%;
+    align-items:center;
+    margin:0 auto;
     text-align: center;
     display: flex;
     justify-content: center;
-    flex-flow: row;
+    flex-flow: wrap;
 }
 
 .next-button{
@@ -63,8 +72,85 @@
     border: 1px solid #009688ba;
     border-radius: 4px;
     cursor: pointer;
+    margin: 4px;
 }
 
 .next-button:hover{
     background: #009688;
+}
+
+.display-none{
+    display: none;
+}
+
+.content-block-general{
+    display:none
+}
+
+.general-desc{
+    width: 100%;
+    height: 40%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    font-size: 2em;
+}
+
+.general-title{
+    width: 100%;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-flow: column;
+    font-size: 3em;
+}
+
+.general-title-block{
+    width: 100%;
+    height: 20%;
+}
+
+.time-block{
+    width: 100%;
+    height: 40%;
+    align-items: center;
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+    text-align: center;
+}
+
+.time-block-child{
+    width : 200px;
+    height: 80px;
+    margin : 10px;
+    font-size: 3.5em;
+    cursor: pointer;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+
+.time-block-child:hover{
+    font-size: 4em;
+}
+
+.time{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-flow: column;
+}
+
+.end-block{
+    width: 100%;
+    height: 60%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    text-align: center;
+    font-size:5em;
 }

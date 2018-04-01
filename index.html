@@ -4,32 +4,29 @@
 <meta charset="UTF-8">
 <title>辩论赛</title>
 <link rel="stylesheet" href="css/main.css">
-<script type="text/javascript" src="js/mian.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
 </head>
 <body class="body white-color">
-	<div id="one" class="content-block-one">
+	<div id="0" class="content-block-one display-none content">
 		<div class="title-block">
-			<h2>辩论赛</h2>
+			<h2 id = "title"></h2>
 		</div>
 		<div class="content-block">
-			<div class="content-child"><h3>工作中遇到碧池要以牙还牙</h3></div>
-			<div class="content-child"><h3>工作中遇到碧池还是不跟TA一般计较</h3></div>
+			<div class="content-child"><h3 id="positive"></h3></div>
+			<div class="content-child"><h3 id="negative"></h3></div>
 		</div>
 		<div class="button-block">
-			<div class="next-button">
-				下一环
+			<div class="next-button" onclick="next('0')">
+				开始
 			</div>
 		</div>
 	</div>
-
-	<div id="two" class="content-block-two">
-		<div>
-			<div></div>
-			<div></div>
-		</div>
-
-		<div>
-			
+	<div id="1000" class="content-block-general display-none content">
+		<div class="end-block" id="end"></div>
+		<div class="button-block">
+			<div class="next-button" onclick="up('1000')">
+				上一环
+			</div>
 		</div>
 	</div>
 </body>
