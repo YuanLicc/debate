@@ -6,6 +6,15 @@ var debate = {
 	startback : "images/start.jpg",
 	end : "完毕",
 	endback : "images/start.jpg",
+	animationTime : 1,
+	startAnimation : {
+		centerToLeft : "centerToLeft",
+		leftToCenter : "leftToCenter"
+	},
+	endAnimation : {
+		rightToCenter : "rightToCenter",
+		centerToRight : "centerToRight"
+	},
 	pages : [
 		{
 			title : "开篇立论",
@@ -19,7 +28,12 @@ var debate = {
 					time : 150
 				}
 			],
-			background:""
+			animation : {
+				leftToCenter : "leftToCenter", 
+				centerToRight : "centerToRight",
+				rightToCenter : "rightToCenter",
+				centerToLeft : "centerToLeft"
+			}
 		},
 		{
 			title : "攻辩",
@@ -29,7 +43,13 @@ var debate = {
 				{
 					time : 105,
 				}
-			]
+			],
+			animation : {
+				leftToCenter : "leftToCenter", 
+				centerToRight : "centerToRight",
+				rightToCenter : "rightToCenter",
+				centerToLeft : "centerToLeft"
+			}
 		},
 		{
 			title : "攻辩",
@@ -39,7 +59,13 @@ var debate = {
 				{
 					time : 105,
 				}
-			]
+			],
+			animation : {
+				leftToCenter : "leftToCenter", 
+				centerToRight : "centerToRight",
+				rightToCenter : "rightToCenter",
+				centerToLeft : "centerToLeft"
+			}
 		},
 		{
 			title : "攻辩",
@@ -49,7 +75,13 @@ var debate = {
 				{
 					time : 105,
 				}
-			]
+			],
+			animation : {
+				leftToCenter : "leftToCenter", 
+				centerToRight : "centerToRight",
+				rightToCenter : "rightToCenter",
+				centerToLeft : "centerToLeft"
+			}
 		},
 		{
 			title : "攻辩",
@@ -59,7 +91,13 @@ var debate = {
 				{
 					time : 105,
 				}
-			]
+			],
+			animation : {
+				leftToCenter : "leftToCenter", 
+				centerToRight : "centerToRight",
+				rightToCenter : "rightToCenter",
+				centerToLeft : "centerToLeft"
+			}
 		},
 		{
 			title : "攻辩",
@@ -69,7 +107,13 @@ var debate = {
 				{
 					time : 90,
 				}
-			]
+			],
+			animation : {
+				leftToCenter : "leftToCenter", 
+				centerToRight : "centerToRight",
+				rightToCenter : "rightToCenter",
+				centerToLeft : "centerToLeft"
+			}
 		},
 		{
 			title : "自由辩论",
@@ -79,7 +123,13 @@ var debate = {
 				{
 					time : 480,
 				}
-			]
+			],
+			animation : {
+				leftToCenter : "leftToCenter", 
+				centerToRight : "centerToRight",
+				rightToCenter : "rightToCenter",
+				centerToLeft : "centerToLeft"
+			}
 		},
 		{
 			title : "总结陈词",
@@ -89,7 +139,13 @@ var debate = {
 				{
 					time : 180,
 				}
-			]
+			],
+			animation : {
+				leftToCenter : "leftToCenter", 
+				centerToRight : "centerToRight",
+				rightToCenter : "rightToCenter",
+				centerToLeft : "centerToLeft"
+			}
 		}
 	]
 }
@@ -101,44 +157,89 @@ var timer = null;
 
 var next = function(id) {
 	var state = 0;
-
 	for(var key in elements) {
 		if(state !== 0) {
-			setDisplay(elements[key]);
+			if(key == "1000") {
+				addAnimation(elements[key], debate.endAnimation.rightToCenter);
+			}
+			else{
+				addAnimation(elements[key], debate.pages[key - 1].animation.rightToCenter);
+			}
+			//setCenter(elements[key]);
 			return;
 		}
 
 		if (key === id) {
 			state = 1;
-			setDisplayNone(elements[key]);
+			//setLeft(elements[key]);
+			if(id == "0") {
+				addAnimation(elements[key], debate.startAnimation.centerToLeft);
+			}
+			else{
+				addAnimation(elements[key], debate.pages[key - 1].animation.centerToLeft);
+			}
+			
 		}
 	}
 }
 
 var up = function(id) {
-
 	var up = null;
 	var state = 0;
+	var upId = null;
 
 	for(var key in elements){
 		if (key === id) {
 			state = 1;
-			setDisplayNone(elements[key]);
+			//setRight(elements[key]);
+			if(key == "1000") {
+				addAnimation(elements[key], debate.endAnimation.centerToRight);
+			}
+			else{
+				addAnimation(elements[key], debate.pages[key - 1].animation.centerToRight);
+			}
 			break;
 		}
 		else{
+			upId = key;
 			up = elements[key];
 		}
 	}
-
 	if(state === 1) {
-		setDisplay(up);
+		if(upId == "0") {
+			addAnimation(elements[upId], debate.startAnimation.leftToCenter);
+		}
+		else{
+			addAnimation(elements[upId], debate.pages[upId - 1].animation.leftToCenter);
+		}
+		//setCenter(up);
 	}
+}
 
+var addAnimation = function(ele, animation) {
+	if(ele == null || animation == null) return;
+	var animationValue = animation + " " + debate.animationTime + "s";
+	addAttribute(ele, "animation", animationValue);
+	addAttribute(ele, "-moz-animation", animationValue);
+	addAttribute(ele, "-webkit-animation", animationValue);
+	addAttribute(ele, "-o-animation", animationValue);
+	addAttribute(ele, "animation-fill-mode", "forwards");
 }
 
 var getElementById = function(id) {
 	return document.getElementById(id);
+}
+
+var setRight = function(element) {
+	addAttribute(element, "left", "100%")
+}
+
+var setLeft = function(element) {
+	addAttribute(element, "left", "-100%")
+}
+
+var setCenter = function(element) {
+	addAttribute(element, "left", "0");
 }
 
 var setDisplayNone = function(element) {
@@ -151,6 +252,7 @@ var setDisplay = function(element) {
 
 var addAttribute = function (element, style, value) {
 	var styleOld = element.getAttribute("style");
+	styleOld = deleteExitCss(styleOld, style);
 	if (styleOld == null) {
 		styleOld = "";
 	}
@@ -191,6 +293,29 @@ var parseTimerInnerHtml = function(id, timers) {
 
 }
 
+var deleteExitCss = function(style, css) {
+	if(style == null || style.trim == "") return "";
+	var arr = style.split(";");
+	var result = "";
+	if(arr.length == 0) {
+		return result;
+	}
+	else{
+		for (var i = 0; i < arr.length; i++) {
+			if(arr[i].indexOf(css + ":") === 0){
+				//nothing to do
+			}
+			else if(arr[i].trim() === "") {
+				// nothing to do
+			}
+			else{
+				result += arr[i] + ";";
+			}
+		}
+	}
+	return result;
+}
+
 var initPages = function() {
 	var appendHTML = "";
 	for(var i = 0; i < debate.pages.length; i++) {
@@ -199,7 +324,7 @@ var initPages = function() {
 
 		var timersHtml = parseTimerInnerHtml(id, debate.pages[i].timers);
 
-		appendHTML += "<div id=\""+ id +"\" class=\"content-block-general display-none content\">"
+		appendHTML += "<div id=\""+ id +"\" class=\"content\">"
 					+ "<div class=\"general-title-block\">"
 						+ "<div class=\"general-title\">"+ debate.pages[i].title +"</div>"
 						+ "<div class=\"general-desc\">"+ debate.pages[i].desc +"</div>"
@@ -208,8 +333,8 @@ var initPages = function() {
 					+ timersHtml
 					+ "</div>"
 					+ "<div class=\"button-block\">"
-						+ "<div class=\"next-button\" onclick=\"up('"+ id +"')\"></div>"
-						+ "<div class=\"next-button\" onclick=\"next('"+ id +"')\"></div>"
+						+ "<div class=\"next-button\" onclick=\"up('"+ id +"')\">上一页</div>"
+						+ "<div class=\"next-button\" onclick=\"next('"+ id +"')\">下一页</div>"
 					+ "</div>"
 				+ "</div>";
 	}
@@ -254,17 +379,17 @@ var clickTime = function(id) {
 
 var initPagesDisplay = function() {
 	elements["0"] = getElementById("0");
-	setDisplay(elements["0"]);
+	setCenter(elements["0"]);
 	setBackground(elements["0"], debate.startback);
 
 	for(var i = 0; i < debate.pages.length; i++) {
 		var id = debate.pages[i].id;
 		elements[id] = getElementById(id);
-		setDisplayNone(elements[id]);
+		setRight(elements[id]);
 		setBackground(elements[id], debate.pages[i].back);
 	}
 	elements["1000"] = getElementById("1000");
-	setDisplayNone(elements["1000"]);
+	setRight(elements["1000"]);
 	setBackground(elements["1000"], debate.endback);
 }
 
