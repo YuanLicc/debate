@@ -138,6 +138,9 @@ var debate = {
 			timers : [
 				{
 					time : 180,
+				},
+				{
+					time : 180,
 				}
 			],
 			animation : {
@@ -352,9 +355,9 @@ var initTimer = function() {
 				debate.pages[i].timers[j].id = debate.pages[i].id + "" + j;
 				debate.pages[i].ele = document.getElementById(debate.pages[i].timers[j].id);
 				debate.pages[i].timers[j].timer = new Timer(debate.pages[i].timers[j].time, debate.pages[i].ele, function(ele, minute, second) {
-					ele.innerHTML = minute + " :" + second;
+					ele.innerHTML = minute + " : " + second;
 				});
-				debate.pages[i].ele.innerHTML = debate.pages[i].timers[j].timer.minute + " :" + debate.pages[i].timers[j].timer.second;
+				debate.pages[i].ele.innerHTML = debate.pages[i].timers[j].timer.minute + " : " + debate.pages[i].timers[j].timer.second;
 			}
 		}
 	}
@@ -393,6 +396,11 @@ var initPagesDisplay = function() {
 	setBackground(elements["1000"], debate.endback);
 }
 
+window.onresize = function() {
+	windowHeight = window.innerHeight;
+	initHeight();
+}
+
 var init = function() {
 	windowHeight = window.innerHeight;
 	initMainPage();
@@ -418,8 +426,14 @@ var Timer = function(time, ele, show){
 	object.minute = Math.floor(object.time / 60 % 60);
 	object.minute < 10 && (object.minute = '0' + object.minute);
 	object.second = Math.floor(object.time % 60);
+	if(object.second == 0) {
+		object.second = "00";
+	}
 
 	object.countDown = function(){
+		if(object.second == "00") {
+			object.second = 0;
+		}
 		object.second--;
 		object.second < 10 && (object.second = '0' + object.second);
 		if(object.second.length >= 3){
